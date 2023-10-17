@@ -40,19 +40,3 @@
 .read-the-docs {
   color: #888;
 }
-
-.App {
-  display: flex;
-  flex-direction: row; /* Display the components horizontally */
-  justify-content: space-between; /* Spread components apart horizontally */
-  align-items: flex-start; /* Align components to the top vertically */
-}
-
-.random-data {
-  flex: 1; /* Allow the "Random Data" component to take available horizontal space */
-}
-
-.ban-list {
-  width: 200px; /* Set a fixed width for the "Ban List" */
-  margin-left: 20px; /* Add some spacing between the components */
-}

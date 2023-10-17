@@ -1,28 +1,53 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const RandomImage = () => {
   const [imageData, setImageData] = useState(null);
   const [bannedAttributes, setBannedAttributes] = useState([]);
+  const [newImageRequested, setNewImageRequested] = useState(false);
 
   const fetchRandomImage = async () => {
     try {
-      const response = await fetch(
+      console.log('Fetching new image...'); // Add this line
+
+      const response = await axios.get(
         `https://api.nasa.gov/planetary/apod?api_key=hHPegadDSfgg51OHezO5cFAeiy8OSxAECrz83ZyA
         `
       );
-      const data = await response.json();
+      const data = response.data;
+      console.log('Fetched new image data:', data); // Add this line
+      const randomDate = generateRandomDate();
+
       setImageData(data);
+      setNewImageRequested(false);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
 
+  const generateRandomDate = () => {
+    const startDate = new Date('1995-06-16').getTime();
+    const endDate = new Date().getTime();
+    const randomTime = Math.random() * (endDate - startDate) + startDate;
+    const randomDate = new Date(randomTime).toISOString().split('T')[0];
+    return randomDate;
+  };
+
   useEffect(() => {
-    fetchRandomImage();
-  }, []);
+    if (newImageRequested) {
+      fetchRandomImage();
+    }
+  }, [newImageRequested]);
 
   const handleBanAttribute = (attribute) => {
+
     setBannedAttributes([...bannedAttributes, attribute]);
+  };
+
+  const handleNewImageRequest = () => {
+    console.log('New image requested...'); // Add this line
+
+    setNewImageRequested(true);
   };
 
   const filteredAttributes = imageData
@@ -37,9 +62,20 @@ const RandomImage = () => {
     : null;
 
   return (
-    <div>
-      {imageData && <img src={imageData.url} alt={imageData.title} />}
-      <div>{filteredAttributes}</div>
+    <div className="random-image-container">
+      <div className="image-container">
+        {imageData && <img src={imageData.url} alt={imageData.title} />}
+        <button onClick={handleNewImageRequest}>Get New Image</button>
+      </div>
+      <div className="banned-list">
+        <h2>Banned List</h2>
+        <ul>
+          {bannedAttributes.map((attribute) => (
+            <li key={attribute}>{attribute}</li>
+          ))}
+        </ul>
+      </div>
+      <div className="attributes-list">{filteredAttributes}</div>
     </div>
   );
 };
