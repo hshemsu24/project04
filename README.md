@@ -32,7 +32,7 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='C:\Users\Hamza\VsCodeProjects\CodePath\project04\veniVici\src\assets\p4gif.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='veniVici\src\assets\p4gif.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 <!-- Replace this with whatever GIF tool you used! -->
 GIF created with ...  
