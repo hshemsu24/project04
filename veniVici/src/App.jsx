@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import './App.css';
 
 const App = () => {
@@ -13,8 +12,8 @@ const App = () => {
   const[weight, setWeight] = useState('');
   const[height, setHeight] = useState('');
   const[lifespan, setLifespan] = useState('');
-  //prev
-  //cur 
+  const[discovered, setDiscovered] = useState([]);
+  const[curName, setCurName] = useState('');
 
   const getNewData = async () => {
     const randURL = `${dogAPI}?has_breeds=1&api_key=${apiKey}`;
@@ -40,8 +39,10 @@ const App = () => {
         setPic(dogImage);
         setBreed(dogBreed);
         setLifespan(dogLife);
-        //prev dog?
+        setCurName(dogBreed);
+        addDiscovered();
       }
+      
       } catch (error) {
          console.error('Error fetching data:', error);
       }
@@ -56,7 +57,12 @@ const App = () => {
     const attributes = [
       {label: 'Breed', value: breed},{label: 'Weight', value: weight},{label:'Height', value: height},{label: 'Lifespan', value: lifespan}
     ];
- 
+    
+    function addDiscovered() {
+      if (curName.length >= 1) {
+        setDiscovered([...discovered, {curName, pic}]);
+      }
+    }
   
   return (
     <div className='main_container'>
@@ -66,8 +72,17 @@ const App = () => {
         <p>Press Search! to Begin</p>
       </div>
       <div className='main_content'>
+        <div className='prev_dogs'>
+          <h2>Discovered Dogs</h2>
+            {discovered.map((item, index) => (
+              <ul key={index}>
+                <img className='dis_pic' src={item.pic} alt="" />
+                <p>{item.curName}</p>
+              </ul>
+            ))}
+        </div>
         <div className='picture'>
-            <img className="dog-img" src={pic} alt="" />
+            <img className="dog-pic" src={pic} alt="" />
             <div className='attributes'>
               {attributes.map((attribute) => (
                 <button key={attribute.label} onClick={() => addToBannedList(attribute.label, attribute.value)}>
@@ -78,11 +93,11 @@ const App = () => {
             <button className='search_button' onClick={getNewData}>Search!</button>
         </div>
         <div className='banned'>
-        <div>
+          <div>
             <h2>Banned List</h2>
             {bannedList.map((item, index) => (
               <ul className='itemBan' key={index}>
-                {item.type}:{item.value}
+                {item.type}: {item.value}
               </ul>
             ))}
           </div>

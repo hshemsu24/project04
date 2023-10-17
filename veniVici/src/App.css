@@ -40,3 +40,42 @@
 .read-the-docs {
   color: #888;
 }
+
+button{
+  margin: 1em;
+}
+
+.main_content{
+  display: flex;
+}
+
+.picture{
+  width: 30em;
+  
+}
+.dog-pic{
+  width: 30em;
+}
+
+.banned{
+  width: 10em;
+  padding: 4em;
+}
+
+.prev_dogs{
+  width: 10em;
+  padding: 4em;
+  display: flexbox;
+  align-items: center;
+  align-content: center;
+}
+
+.dis_pic{
+  width: 9em;
+}
+
+ul{
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
